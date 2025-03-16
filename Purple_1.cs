@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Purple_1
     {
@@ -158,16 +158,7 @@ namespace Lab_7
             private int _count;
 
             public string Name => _name;
-            public int[] Marks
-            {
-                get
-                {
-                    if (_marks == null) return default(int[]);
-                    int[] marks = new int[_marks.Length];
-                    Array.Copy(_marks, marks, marks.Length);
-                    return marks;
-                }
-            }
+            
             public Judge(string name, int[] marks)
             {
                 _name = name;
@@ -239,8 +230,11 @@ namespace Lab_7
             {
                 if (_participants == null || participants == null) return;
                 Array.Resize(ref _participants, _participants.Length + participants.Length);
-                for (int i = _participants.Length - participants.Length - 1, j = 0; i < _participants.Length; i++)
+
+                for (int i = _participants.Length - participants.Length, j = 0; i < _participants.Length; i++)
+                {
                     _participants[i] = participants[j++];
+                }
             }
 
             public void Sort()

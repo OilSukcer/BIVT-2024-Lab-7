@@ -108,11 +108,11 @@ namespace Lab_7
         public class SkiJumping
         {
             private string _name;
-            private int _standart;
+            private int _standard;
             private Participant[] _participants;
 
             public string Name => _name;
-            public int Standart => _standart;
+            public int Standard => _standard;
             public Participant[] Participants
             {
                 get { return _participants; }
@@ -121,7 +121,7 @@ namespace Lab_7
             public SkiJumping(string name, int standart)
             {
                 _name = name;
-                _standart = standart;
+                _standard = standart;
                 _participants = new Participant[0];
             }
 
@@ -135,7 +135,7 @@ namespace Lab_7
             {
                 if (_participants == null || participants == null) return;
                 Array.Resize(ref _participants, _participants.Length + participants.Length);
-                for (int i = _participants.Length - participants.Length - 1, j = 0; i < _participants.Length; i++)
+                for (int i = _participants.Length - participants.Length, j = 0; i < _participants.Length; i++)
                     _participants[i] = participants[j++];
             }
             public void Jump(int distance, int[] marks)
@@ -146,7 +146,7 @@ namespace Lab_7
                 {
                     if (participant.Distance == 0)
                     {
-                        participant.Jump(distance, marks, _standart);
+                        participant.Jump(distance, marks, _standard);
                         break;
                     }
                 }
@@ -155,7 +155,7 @@ namespace Lab_7
             {
                 Console.WriteLine("Name: " + _name);
 
-                Console.WriteLine("Standart: " + _standart);
+                Console.WriteLine("Standard: " + _standard);
             }
         }
 

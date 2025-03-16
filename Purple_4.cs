@@ -45,7 +45,7 @@ namespace Lab_7
             {
                 if (array == null) return;
 
-                array = array.Where(a => a != null).OrderBy(a => a.Time).ToArray();
+                array = array.OrderBy(a => a.Time).ToArray();
             }
         }
 
@@ -128,21 +128,7 @@ namespace Lab_7
             {
                 if (_sportsmen == null) return;
 
-                for (int i = 1, j = 2; i < _sportsmen.Length;)
-                {
-                    if (i == 0 || _sportsmen[i - 1].Time <= _sportsmen[i].Time)
-                    {
-                        i = j;
-                        j++;
-                    }
-                    else
-                    {
-                        var temp = _sportsmen[i - 1];
-                        _sportsmen[i - 1] = _sportsmen[i];
-                        _sportsmen[i] = temp;
-                        i--;
-                    }
-                }
+                _sportsmen = _sportsmen.OrderBy(s => s.Time).ToArray();
             }
             public static Group Merge(Group group1, Group group2)
             {
@@ -167,39 +153,53 @@ namespace Lab_7
             {
                 if (_sportsmen == null) return;
 
+                Sort();
+
+                
+
                 Split(out Sportsman[] men, out Sportsman[] women);
 
-                if (men == null || women == null) return;
+                
+
+                if (men == null || women == null || men.Length == 0 || women.Length == 0) return;
 
                 Sportsman.Sort(men);
                 Sportsman.Sort(women);
 
+                
+
                 Sportsman[] mergedSportsmen = Merge(men, women);
+
+                
+
                 _sportsmen = mergedSportsmen == null ? _sportsmen : mergedSportsmen;
             }
 
             private Sportsman[] Merge(Sportsman[] men, Sportsman[] women)
             {
-                if (men == null || women == null) return null;
+                if (men == null || women == null || (men.Length == 0 && women.Length == 0)) return null;
+                if (men.Length == 0) return women;
+                if (women.Length == 0) return men;
                 
                 int m = 0, w = 0, s = 0;
                 Sportsman[] sportsmen = new Sportsman[men.Length + women.Length];
 
                 while (m < men.Length && w < women.Length)
                 {
-                    sportsmen[s++] = men[m++];
-                    sportsmen[s++] = women[w++];
+                    sportsmen[s++] = men[0].Time < women[0].Time ? men[m++] : women[w++];
+                    sportsmen[s++] = men[0].Time < women[0].Time ? women[w++] : men[m++];
                 }
 
                 if (men.Length > women.Length)
                 {
-                    while (w < women.Length)
-                        sportsmen[s++] = women[w++];
+                    
+                    while (m < men.Length)
+                        sportsmen[s++] = men[m++];
                 }
                 else
                 {
-                    while (m < men.Length)
-                        sportsmen[s++] = men[m++];
+                    while (w < women.Length)
+                        sportsmen[s++] = women[w++];
                 }
 
                 return sportsmen;
