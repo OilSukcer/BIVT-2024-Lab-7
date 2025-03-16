@@ -45,7 +45,8 @@ namespace Lab_7
             {
                 if (array == null) return;
 
-                array = array.OrderBy(a => a.Time).ToArray();
+                var newArray = array.OrderBy(a => a.Time).ToArray();
+                Array.Copy(array, newArray, array.Length);
             }
         }
 
@@ -128,7 +129,8 @@ namespace Lab_7
             {
                 if (_sportsmen == null) return;
 
-                _sportsmen = _sportsmen.OrderBy(s => s.Time).ToArray();
+                var sportsmen = _sportsmen.OrderBy(s => s.Time).ToArray();
+                Array.Copy(sportsmen, _sportsmen, sportsmen.Length);
             }
             public static Group Merge(Group group1, Group group2)
             {

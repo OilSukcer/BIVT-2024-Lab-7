@@ -72,7 +72,7 @@ namespace Lab_7
                     return totalPoints;
                 }
             }
-            public int Judge => _judge;
+            private int Judge => _judge;
             public Participant(string name, string surname)
             {
                 _name = name;
@@ -93,14 +93,13 @@ namespace Lab_7
             {
                 if (participants == null) return;
 
+                var sortedParticipants = participants.Where(p => p.Marks != null).ToArray();
 
                 for (int judge = 0; judge < 7; judge++)
                 {
-                    for (int i = 1, j = 2; i < participants.Length;)
+                    for (int i = 1, j = 2; i < sortedParticipants.Length;)
                     {
-                        if (i != 0 && (participants[i - 1]._marks == null || participants[i]._marks == null)) continue;
-
-                        if (i == 0 || participants[i - 1]._marks[judge] > participants[i]._marks[judge])
+                        if (i == 0 || sortedParticipants[i - 1]._marks[judge] > sortedParticipants[i]._marks[judge])
 
                         {
                             i = j;
@@ -108,17 +107,17 @@ namespace Lab_7
                         }
                         else
                         {
-                            var temp = participants[i - 1];
-                            participants[i - 1] = participants[i];
-                            participants[i] = temp;
+                            var temp = sortedParticipants[i - 1];
+                            sortedParticipants[i - 1] = sortedParticipants[i];
+                            sortedParticipants[i] = temp;
                             i--;
                         }
                     }
-                    for (int i = 0; i < participants.Length; i++)
+                    for (int i = 0; i < sortedParticipants.Length; i++)
                     {
-                        if (participants[i]._places == null) continue;
                         participants[i]._places[judge] = i + 1;
                     }
+                    participants = sortedParticipants.Concat(participants.Where(p => p.Marks == null)).ToArray();
                 }
 
             }
@@ -173,6 +172,7 @@ namespace Lab_7
             public Skating(double[] moods)
             {
                 _participants = new Participant[0];
+                _moods = new double[7];
                 if (moods.Length > 7)
                     Array.Copy(moods, _moods, 7);
                 else
@@ -187,7 +187,7 @@ namespace Lab_7
 
                 foreach (var participant in _participants)
                 {
-                    if (participant.Judge == 0)
+                    if (participant.Marks.All(m => m == 0))
                     {
                         for (int judge = 0; judge < 7; judge++)
                         {
