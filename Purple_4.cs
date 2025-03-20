@@ -46,7 +46,7 @@ namespace Lab_7
                 if (array == null) return;
 
                 var newArray = array.OrderBy(a => a.Time).ToArray();
-                Array.Copy(array, newArray, array.Length);
+                Array.Copy(newArray, array, array.Length);
             }
         }
 

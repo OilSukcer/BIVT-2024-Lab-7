@@ -70,7 +70,7 @@ namespace Lab_7
                     for (int i = 0; i < _marks.Length; i++)
                         totalPoints += _marks[i];
                     return totalPoints;
-                }
+                }   
             }
             private int Judge => _judge;
             public Participant(string name, string surname)
@@ -144,8 +144,12 @@ namespace Lab_7
                 }
                 Console.WriteLine();
 
-
-
+                Console.WriteLine("Marks:");
+                foreach (double item in _marks)
+                {
+                    Console.Write($"{item,4}");
+                }
+                Console.WriteLine();
             }
         }
 
@@ -162,16 +166,18 @@ namespace Lab_7
             {
                 get
                 {
-                    if ( _moods == null ) return default(double[]);
-                    double[] moods = new double[_moods.Length];
-                    Array.Copy(_moods, moods, _moods.Length);
-                    return moods;
+                    return _moods;
                 }
             }
 
             public Skating(double[] moods)
             {
                 _participants = new Participant[0];
+                if (moods == null)
+                {
+                    _moods = null;
+                    return;
+                }
                 _moods = new double[7];
                 if (moods.Length > 7)
                     Array.Copy(moods, _moods, 7);
@@ -191,7 +197,7 @@ namespace Lab_7
                     {
                         for (int judge = 0; judge < 7; judge++)
                         {
-                            participant.Evaluate(marks[judge]);
+                            participant.Evaluate(marks[judge] * _moods[judge]);
                         }
                         break;
                     }
