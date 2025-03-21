@@ -117,7 +117,10 @@ namespace Lab_7
                     {
                         participants[i]._places[judge] = i + 1;
                     }
-                    participants = sortedParticipants.Concat(participants.Where(p => p.Marks == null)).ToArray();
+
+                    sortedParticipants = sortedParticipants.Concat(participants.Where(p => p.Marks == null)).ToArray();
+
+                    Array.Copy(sortedParticipants, participants, participants.Length);
                 }
 
             }
@@ -129,7 +132,6 @@ namespace Lab_7
                 participants = participants.OrderBy(participant => participant.Score).ThenBy(participant => participant.TopPlace)
                     .ThenByDescending(participant => participant.TotalPoints).ToArray();
 
-                //array = participants;
                 Array.Copy(participants, array, participants.Length);
             }
             public void Print()
