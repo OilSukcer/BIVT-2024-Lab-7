@@ -93,7 +93,7 @@ namespace Lab_7
             {
                 if (participants == null) return;
 
-                var sortedParticipants = participants.Where(p => p.Marks != null).ToArray();
+                var sortedParticipants = participants.Where(p => p.Marks != null && p.Places != null).ToArray();
 
                 for (int judge = 0; judge < 7; judge++)
                 {
@@ -118,7 +118,7 @@ namespace Lab_7
                         participants[i]._places[judge] = i + 1;
                     }
 
-                    sortedParticipants = sortedParticipants.Concat(participants.Where(p => p.Marks == null)).ToArray();
+                    sortedParticipants = sortedParticipants.Concat(participants.Where(p => p.Marks == null || p.Places == null)).ToArray();
 
                     Array.Copy(sortedParticipants, participants, participants.Length);
                 }
@@ -191,10 +191,11 @@ namespace Lab_7
             protected abstract void ModificateMood();
             public void Evaluate(double[] marks)
             {
-                if (marks == null || _participants == null) return;
+                if (marks == null || _participants == null || _moods == null) return;
 
                 foreach (var participant in _participants)
                 {
+                    if (participant.Marks == null) continue;
                     if (participant.Marks.All(m => m == 0))
                     {
                         for (int judge = 0; judge < 7; judge++)
