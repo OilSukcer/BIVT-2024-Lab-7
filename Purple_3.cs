@@ -115,7 +115,7 @@ namespace Lab_7
                     }
                     for (int i = 0; i < sortedParticipants.Length; i++)
                     {
-                        participants[i]._places[judge] = i + 1;
+                        sortedParticipants[i]._places[judge] = i + 1;
                     }
 
                     sortedParticipants = sortedParticipants.Concat(participants.Where(p => p.Marks == null || p.Places == null)).ToArray();
