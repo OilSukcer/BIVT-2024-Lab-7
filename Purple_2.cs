@@ -105,7 +105,7 @@ namespace Lab_7
             }
         }
 
-        public class SkiJumping
+        public abstract class SkiJumping
         {
             private string _name;
             private int _standard;

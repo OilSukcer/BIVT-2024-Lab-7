@@ -99,7 +99,7 @@ namespace Lab_7
                 {
                     for (int i = 1, j = 2; i < sortedParticipants.Length;)
                     {
-                        if (i == 0 || sortedParticipants[i - 1]._marks[judge] > sortedParticipants[i]._marks[judge])
+                        if (i == 0 || sortedParticipants[i - 1]._marks[judge] >= sortedParticipants[i]._marks[judge])
 
                         {
                             i = j;
